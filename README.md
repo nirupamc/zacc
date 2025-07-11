@@ -63,28 +63,10 @@ cp .env.example .env
 # At minimum, change the SECRET_KEY for production
 ```
 
-### 4. ⚠️ **IMPORTANT: Spotify Authentication Setup**
 
-For reliable Spotify downloads, set up API authentication:
 
-1. **Get Spotify Credentials** (5 minutes):
 
-   - Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
-   - Create a new app
-   - Copy Client ID and Client Secret
-
-2. **Add to `.env` file**:
-
-   ```env
-   SPOTIFY_CLIENT_ID=your_client_id_here
-   SPOTIFY_CLIENT_SECRET=your_client_secret_here
-   ```
-
-3. **Detailed Setup**: See [`SPOTIFY_SETUP.md`](SPOTIFY_SETUP.md) for complete instructions
-
-**Without authentication**: You may get rate limiting errors with Spotify URLs. YouTube URLs work fine without setup.
-
-### 5. Run the Application
+### 4. Run the Application
 
 ```bash
 # Development mode
@@ -94,7 +76,7 @@ python app.py
 gunicorn --bind 0.0.0.0:5000 --workers 2 --timeout 300 app:app
 ```
 
-### 6. Access the Application
+### 5. Access the Application
 
 Open your browser and navigate to `http://localhost:5000`
 
