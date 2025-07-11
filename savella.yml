@@ -1,0 +1,40 @@
+# Savella Cloud Hosting Configuration
+# For Spotify/YouTube Playlist Downloader
+
+# Application settings
+app:
+  name: "playlist-downloader"
+  type: "web"
+  port: 5000
+  start_command: "gunicorn -w 4 -b 0.0.0.0:5000 app:app"
+
+# Runtime environment
+runtime:
+  python: "3.11"
+  
+# Build commands
+build:
+  - "pip install -r requirements.txt"
+  - "apt-get update && apt-get install -y ffmpeg"
+
+# Environment variables (set these in Savella dashboard)
+env:
+  - SPOTIFY_CLIENT_ID
+  - SPOTIFY_CLIENT_SECRET
+  - FLASK_ENV=production
+  - FLASK_DEBUG=false
+
+# Health check
+health_check:
+  path: "/health"
+  port: 5000
+  
+# Static files (if needed)
+static:
+  - path: "/static"
+    directory: "static"
+    
+# File upload limits
+limits:
+  file_size: "500MB"
+  request_timeout: "300s"

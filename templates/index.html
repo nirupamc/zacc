@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zacccc</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-music"></i> playlist downloader for zacccc</h1>
+            <p>Download Spotify or YouTube playlists in high-quality audio formats</p>
+        </header>
+
+        <main class="main-content">
+            <div class="download-form">
+                <div class="form-group">
+                    <label for="url-input">
+                        <i class="fas fa-link"></i> Playlist/Track URL
+                    </label>
+                    <input 
+                        type="url" 
+                        id="url-input" 
+                        placeholder="Paste your Spotify or YouTube playlist/track URL here..."
+                        required
+                    >
+                    <small class="help-text">
+                        Supports: Spotify playlists/tracks, YouTube playlists/videos, YouTube Music
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="format-select">
+                        <i class="fas fa-file-audio"></i> Output Format
+                    </label>
+                    <select id="format-select">
+                        <option value="mp3">MP3 (Compressed, smaller size)</option>
+                        <option value="wav">WAV (Uncompressed, high quality)</option>
+                        <option value="flac">FLAC (Lossless, best quality)</option>
+                    </select>
+                </div>
+
+                <button id="download-btn" class="download-button">
+                    <i class="fas fa-download"></i>
+                    Start Download
+                </button>
+            </div>
+
+            <!-- Progress Section -->
+            <div id="progress-section" class="progress-section" style="display: none;">
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <h3><i class="fas fa-spinner fa-spin"></i> Processing...</h3>
+                        <span id="progress-percentage">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <p id="progress-message">Initializing download...</p>
+                </div>
+            </div>
+
+            <!-- Result Section -->
+            <div id="result-section" class="result-section" style="display: none;">
+                <div id="success-result" class="result success" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Download Complete!</h3>
+                    <p>Your playlist has been processed and is ready for download.</p>
+                    <button id="download-file-btn" class="download-file-button">
+                        <i class="fas fa-download"></i>
+                        Download ZIP File
+                    </button>
+                </div>
+
+                <div id="error-result" class="result error" style="display: none;">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h3>Download Failed</h3>
+                    <p id="error-message">An error occurred during download.</p>
+                    <button id="retry-btn" class="retry-button">
+                        <i class="fas fa-redo"></i>
+                        Try Again
+                    </button>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="features">
+                <h2>Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-infinity"></i>
+                        <h3>No Limits</h3>
+                        <p>Download playlists of any size, even with hundreds of tracks</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-compress-alt"></i>
+                        <h3>ZIP Archive</h3>
+                        <p>All tracks are automatically compressed into a single ZIP file</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-headphones"></i>
+                        <h3>High Quality</h3>
+                        <p>Choose from MP3, WAV, or FLAC formats for the best audio experience</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Responsive</h3>
+                        <p>Works perfectly on desktop, tablet, and mobile devices</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="instructions">
+                <h2>How to Use</h2>
+                <ol>
+                    <li><strong>Copy URL:</strong> Get the URL of your Spotify or YouTube playlist/track</li>
+                    <li><strong>Paste & Choose:</strong> Paste the URL and select your preferred audio format</li>
+                    <li><strong>Download:</strong> Click "Start Download" and wait for processing to complete</li>
+                    <li><strong>Enjoy:</strong> Download the ZIP file containing all your tracks</li>
+                </ol>
+            </div>
+
+            <!-- Troubleshooting -->
+            <div class="troubleshooting">
+                <h2>Troubleshooting</h2>
+                <div class="troubleshooting-grid">
+                    <div class="troubleshooting-item">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Rate Limiting Issues</h3>
+                        <p>If you get "too many requests" errors with Spotify URLs:</p>
+                        <ul>
+                            <li>Set up <a href="SPOTIFY_SETUP.md" target="_blank">Spotify API authentication</a></li>
+                            <li>Try smaller playlists (10-20 tracks)</li>
+                            <li>Wait 5-10 minutes between downloads</li>
+                            <li>Use YouTube playlist URLs instead</li>
+                        </ul>
+                    </div>
+                    <div class="troubleshooting-item">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>Playlist Not Found</h3>
+                        <p>If you get "404" or "not found" errors:</p>
+                        <ul>
+                            <li>Make sure the playlist is public</li>
+                            <li>Check the URL is copied correctly</li>
+                            <li>Try opening the URL in your browser first</li>
+                            <li>Some private playlists may not be accessible</li>
+                        </ul>
+                    </div>
+                    <div class="troubleshooting-item">
+                        <i class="fas fa-wifi"></i>
+                        <h3>Network Issues</h3>
+                        <p>If downloads fail or timeout:</p>
+                        <ul>
+                            <li>Check your internet connection</li>
+                            <li>Try a VPN if services are blocked</li>
+                            <li>Retry smaller playlists first</li>
+                            <li>Contact support if issues persist</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supported Platforms -->
+            <div class="supported-platforms">
+                <h2>Supported Platforms</h2>
+                <div class="platform-grid">
+                    <div class="platform-item">
+                        <i class="fab fa-spotify"></i>
+                        <span>Spotify</span>
+                    </div>
+                    <div class="platform-item">
+                        <i class="fab fa-youtube"></i>
+                        <span>YouTube</span>
+                    </div>
+                    <div class="platform-item">
+                        <i class="fas fa-music"></i>
+                        <span>YouTube Music</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 Playlist Downloader. For personal use only. Respect copyright laws.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

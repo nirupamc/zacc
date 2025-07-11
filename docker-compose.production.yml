@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  playlist-downloader:
+    build: .
+    ports:
+      - "80:8080"
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=${SECRET_KEY}
+      - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
+      - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
+      - PORT=8080
+      - WORKERS=2
+      - WORKER_TIMEOUT=300
+    volumes:
+      - downloads_data:/app/downloads
+      - output_data:/app/output
+      - temp_data:/app/temp
+      - logs_data:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: "1.0"
+        reservations:
+          memory: 1G
+          cpus: "0.5"
+
+volumes:
+  downloads_data:
+  output_data:
+  temp_data:
+  logs_data:

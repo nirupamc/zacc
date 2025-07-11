@@ -1,0 +1,8 @@
+Flask==3.0.0
+spotdl==4.2.5
+python-dotenv==1.0.0
+gunicorn==21.2.0
+Werkzeug==3.0.1
+psutil==5.9.6
+requests==2.31.0
+flask-limiter==3.5.0
